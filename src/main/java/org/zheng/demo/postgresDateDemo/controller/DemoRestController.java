@@ -39,10 +39,14 @@ public class DemoRestController {
 
 		dateTime.setLocalDate(LocalDate.now());					// LocalDate=2025-09-09
 		dateTime.setLocalTime(LocalTime.now());					// LocalTime=20:00:19.830218
-		dateTime.setLocalDateTime(LocalDateTime.now());			// LocalDateTime=2025-09-09T20:00:19.830218
-		dateTime.setZonedDateTime(ZonedDateTime.now());			// ZonedDateTime=2025-09-09T20:00:19.830218+05:30[Asia/Calcutta]
+		dateTime.setLocalDateTime(LocalDateTime.now());			// LocalDateTime=2025-09-09T20:00:19.830218						 --> server time
+		dateTime.setZonedDateTime(ZonedDateTime.now());			// ZonedDateTime=2025-09-09T20:00:19.830218+05:30[Asia/Calcutta] --> server time with server time zone 		[UTC: 2025-09-09T14:30:19.830218Z] (20:00 - 05:30 = 14:30 hrs)
 		dateTime.setOffsetDateTime(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.ofHours(-6)));
-																// OffsetDateTime=2025-09-09T20:00:19.830218-06:00}
+																// OffsetDateTime=2025-09-09T20:00:19.830218-06:00}  			 --> server time with time zone as -06:00	[UTC: 2025-09-10T02:00:19.830218Z] (20:00 + 06:00 = 26:00 ie., next day 02:00 hrs)
+		/*
+		dateTime.setOffsetDateTime(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.ofHoursMinutes(5, 30)));
+																// OffsetDateTime=2025-09-09T20:00:19.830218+05:30}  			 --> server time with time zone as +05:30	[UTC: 2025-09-09T14:30:19.830218Z] (20:00 - 05:30 = 14:30 hrs)
+		*/
 
 		// save to repository
 		DateTime fetchedDateTime = demoRepository.save(dateTime);
