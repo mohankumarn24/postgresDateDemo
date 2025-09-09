@@ -23,13 +23,12 @@ class DateTimeRepositoryTest {
 	@Test
 	void test_save_found() {
 
-		DateTime dateTime = new DateTime();
+		DateTime dateTime = new DateTime();						// Entity class
+
 		dateTime.setLocalDate(LocalDate.now());					// LocalDate
 		dateTime.setLocalTime(LocalTime.now());					// LocalTime
 		dateTime.setLocalDateTime(LocalDateTime.now());			// LocalDateTime
-
-		ZonedDateTime zonedNow = ZonedDateTime.now();
-		dateTime.setZonedDateTime(zonedNow);					// ZonedDateTime
+		dateTime.setZonedDateTime(ZonedDateTime.now());			// ZonedDateTime
 		dateTime.setOffsetDateTime(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.ofHours(-6)));		// OffsetDateTime
 		dateTimeRepository.save(dateTime);
 

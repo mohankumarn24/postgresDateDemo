@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
@@ -36,4 +37,16 @@ public class DateTime {
 
 	@Column(name = "offsetDateTime")
 	private OffsetDateTime offsetDateTime;
+
+	@Override
+	public String toString() {
+		return "DateTime{" +
+				"id=" + id +
+				", localDate=" + localDate +
+				", localTime=" + localTime +
+				", localDateTime=" + localDateTime +
+				", zonedDateTime=" + zonedDateTime +
+				", offsetDateTime=" + offsetDateTime +
+				'}';
+	}
 }

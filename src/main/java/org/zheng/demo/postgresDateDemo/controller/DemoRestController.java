@@ -22,49 +22,76 @@ public class DemoRestController {
 
 	@GetMapping("/demo")
 	public List<DateTime> getDemoDates() {
-		return demoRepository.findAll();
+
+		List<DateTime> datetimes = demoRepository.findAll();
+		for (DateTime dateTime : datetimes) {
+			System.out.println(String.format("dateTime value: %s", dateTime.toString()));
+		}
+		//  dateTime value: DateTime{id=353, localDate=2025-09-09, localTime=20:00:19.830, localDateTime=2025-09-09T20:00:19.830218, zonedDateTime=2025-09-09T14:30:19.830218Z, offsetDateTime=2025-09-10T02:00:19.830218Z}
+
+		return datetimes;
 	}
 
 	@PostMapping("/demo")
 	public DateTime saveDemo() {
 
-		DateTime dateTime = new DateTime();
-		dateTime.setLocalDate(LocalDate.now());					// LocalDate
-		dateTime.setLocalTime(LocalTime.now());					// LocalTime
-		dateTime.setLocalDateTime(LocalDateTime.now());			// LocalDateTime
+		DateTime dateTime = new DateTime();						// Entity class
 
-		ZonedDateTime zonedNow = ZonedDateTime.now();
-		dateTime.setZonedDateTime(zonedNow);					// ZonedDateTime
-		dateTime.setOffsetDateTime(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.ofHours(-6)));		// OffsetDateTime
+		dateTime.setLocalDate(LocalDate.now());					// LocalDate=2025-09-09
+		dateTime.setLocalTime(LocalTime.now());					// LocalTime=20:00:19.830218
+		dateTime.setLocalDateTime(LocalDateTime.now());			// LocalDateTime=2025-09-09T20:00:19.830218
+		dateTime.setZonedDateTime(ZonedDateTime.now());			// ZonedDateTime=2025-09-09T20:00:19.830218+05:30[Asia/Calcutta]
+		dateTime.setOffsetDateTime(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.ofHours(-6)));
+																// OffsetDateTime=2025-09-09T20:00:19.830218-06:00}
 
-		return demoRepository.save(dateTime);
+		// save to repository
+		DateTime fetchedDateTime = demoRepository.save(dateTime);
+
+		// compare data
+		System.out.println(String.format("dateTime value: %s", dateTime.toString()));			// saved to db
+		// dateTime value: DateTime{id=353, localDate=2025-09-09, localTime=20:00:19.830218, localDateTime=2025-09-09T20:00:19.830218, zonedDateTime=2025-09-09T20:00:19.830218+05:30[Asia/Calcutta], offsetDateTime=2025-09-09T20:00:19.830218-06:00}
+		System.out.println(String.format("dateTime value: %s", fetchedDateTime.toString()));	// fetched from db
+		// dateTime value: DateTime{id=353, localDate=2025-09-09, localTime=20:00:19.830218, localDateTime=2025-09-09T20:00:19.830218, zonedDateTime=2025-09-09T20:00:19.830218+05:30[Asia/Calcutta], offsetDateTime=2025-09-09T20:00:19.830218-06:00}
+
+		return fetchedDateTime;
 	}
 }
 
 /***********************************************************************************************************************
 Date: 09-SEP-2025
-Time: 07:30 PM (19:30:01)
+Time: 08:00 PM (19:50:07)
 
+ // POST Response: (values are not in UTC format)
  {
- 	"id"			 : 1,
+ 	"id"			 : 353,
  	"localDate"		 : "2025-09-09",
- 	"localTime"		 : "19:30:01.8586053",
- 	"localDateTime"	 : "2025-09-09T19:30:01.8586053",
- 	"zonedDateTime"	 : "2025-09-09T19:30:01.8586053+05:30",
- 	"offsetDateTime" : "2025-09-09T19:30:01.8586053-06:00"
+ 	"localTime"		 : "20:00:19.830218",
+ 	"localDateTime"	 : "2025-09-09T20:00:19.830218",
+ 	"zonedDateTime"	 : "2025-09-09T20:00:19.830218+05:30",
+ 	"offsetDateTime" : "2025-09-09T20:00:19.830218-06:00"
  }
 
-DB Contents: (check last row)
- +-+--+----------+----------+-----------------------+-----------------------------+-----------------------------+
- |#|id|local_date|local_time|local_date_time        |zoned_date_time              |offset_date_time             |
- +-+--+----------+----------+-----------------------+-----------------------------+-----------------------------+
- |1| 1|2025-09-09|  19:30:01|2025-09-09 19:30:01.858|2025-09-09 19:30:01.858 +0530|2025-09-10 07:00:01.858 +0530|
- +-+--+----------+----------+-----------------------+-----------------------------+-----------------------------+
+ // GET Response: (values are in UTC format)
+ {
+ 	"id"			 : 353,
+ 	"localDate"		 : "2025-09-09",
+ 	"localTime"		 : "20:00:19.83",
+ 	"localDateTime"	 : "2025-09-09T20:00:19.830218",
+ 	"zonedDateTime"	 : "2025-09-09T14:30:19.830218Z",
+ 	"offsetDateTime" : "2025-09-10T02:00:19.830218Z"
+ }
+
+
+ DB Contents: (check last row)
+ +-+---+----------+----------+-----------------------+-----------------------------+-----------------------------+
+ |#|id |local_date|local_time|local_date_time        |zoned_date_time              |offset_date_time             |
+ +-+---+----------+----------+-----------------------+-----------------------------+-----------------------------+
+ |1|353|2025-09-09|  20:00:19|2025-09-09 20:00:19.830|2025-09-09 20:00:19.830 +0530|2025-09-10 07:30:19.830 +0530|
+ +-+---+----------+----------+-----------------------+-----------------------------+-----------------------------+
 
  -- datetimedemo.datetime definition
  -- Drop table
  -- DROP TABLE datetimedemo.datetime;
-
  CREATE TABLE datetimedemo.datetime (
  	id int4 NOT NULL,
  	local_date date NULL,
@@ -79,7 +106,7 @@ DB Contents: (check last row)
  ALTER TABLE datetimedemo.datetime OWNER TO postgres;
  GRANT ALL ON TABLE datetimedemo.datetime TO postgres;
 
-
+ -- select query
  select
  	id,
  	local_date,
