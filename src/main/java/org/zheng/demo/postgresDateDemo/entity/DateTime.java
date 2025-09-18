@@ -1,5 +1,6 @@
 package org.zheng.demo.postgresDateDemo.entity;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.ToString;
 
 @Data
 @Entity
@@ -37,6 +37,9 @@ public class DateTime {
 
 	@Column(name = "offsetDateTime")
 	private OffsetDateTime offsetDateTime;
+	
+	@Column(name = "instant")
+	private Instant instant;
 
 	@Override
 	public String toString() {
@@ -47,6 +50,7 @@ public class DateTime {
 				", localDateTime=" + localDateTime +
 				", zonedDateTime=" + zonedDateTime +
 				", offsetDateTime=" + offsetDateTime +
+				", instant=" + instant +
 				'}';
 	}
 }
