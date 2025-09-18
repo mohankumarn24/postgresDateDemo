@@ -61,43 +61,21 @@ public class DemoRestController {
 }
 
 /**
- * ZonedDateTime
- *	- Represents a date-time with a time zone ID (e.g., Europe/Paris).
- *	- Can resolve historical/future daylight saving rules.
- *	- Heavier object, more suitable for user-facing "local time" display.
- *	
- * OffsetDateTime
- *	- Represents a date-time with an offset from UTC (e.g., 2025-09-18T12:34:56+02:00).
- *	- Encodes the offset, but not the full time zone rules (no daylight saving changes, etc.).
- *	- Useful when you care about the offset at that moment but not the evolving rules of a time zone.
- *
- * Instant
- *	- Represents a single point in time in UTC (basically a timestamp like 2025-09-18T12:34:56Z).
- *	- Has no concept of time zone or calendar system.
- *	- Best for absolute moments in time (e.g., event logs, database records).
- *  - You can always convert Instant → ZonedDateTime later when you want to display in a user’s local time.
- *  - Easy to sort, compare, and correlate across distributed systems.
- *  - Captures the exact point in time in UTC, independent of location.
- *
- *
- * Summary Recommendation:
- * - Logging: Instant
- * - Database (Postgres): TIMESTAMPTZ, mapped from Instant
- * - Business logic / UI: Use ZonedDateTime when you need to show user-friendly local times (e.g., "Europe/Paris").
- * - Business logic / UI: Use ZonedDateTime when you need to show user-friendly local times (e.g., "Europe/Paris").
+ * https://chatgpt.com/share/68cc4c77-3f48-8004-9b87-99f272b8da23
+ * https://chatgpt.com/share/68cc4c88-244c-8004-93ce-2cf36fafd48f
+ * https://claude.ai/share/3a4b9208-5b81-4306-9eba-2876e459fb0d
  * 
- * Note:
- * Postgres timestamp without time zone 				→ Stores raw date-time, no offset or zone info.
- * Postgres timestamp with time zone (aka timestamptz) 	→ Always stored in UTC internally, but will convert to the client’s session time zone when queried.
+ * https://medium.com/elca-it/how-to-get-time-zones-right-with-java-8dea13aabe5c
+ * https://medium.com/@davoud.badamchi/tackling-timezones-in-java-a-comprehensive-guide-for-developers-5bad69b2c079
+ * https://medium.com/@ysrgozudeli/mastering-datetime-management-in-java-spring-boot-for-cloud-applications-6c16ef7b0667
  * 
- * Warnings:
- * ⚠️ Avoid storing ZonedDateTime directly — Postgres doesn’t track the named time zone, only UTC (and your client session zone when displaying).
- * ⚠️ Avoid OffsetDateTime unless you explicitly need the offset preserved (rare in most systems).
+ * Notes:
+ * PDF's located at github/javanotes/myresources/pdf's/Time
  */
 
 /***********************************************************************************************************************
-Date: 09-SEP-2025
-Time: 08:00 PM (19:50:07)
+Date: 18-SEP-2025
+Time: 18:09:47
 
  // POST Response: (values are not in UTC format)
 {
