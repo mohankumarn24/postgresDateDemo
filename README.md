@@ -1,2 +1,0 @@
-# postgresDateDemo
-postgresDateDemo

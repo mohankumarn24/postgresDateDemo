@@ -1,7 +1,6 @@
-package org.zheng.demo.postgresDateDemo.repository;
+package net.projectsync.postgresDateDemo.repository;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +11,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.zheng.demo.postgresDateDemo.entity.DateTime;
+import net.projectsync.postgresDateDemo.entity.DateTime;
 
 @SpringBootTest
 class DateTimeRepositoryTest {

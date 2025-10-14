@@ -1,4 +1,4 @@
-package org.zheng.demo.postgresDateDemo.controller;
+package net.projectsync.postgresDateDemo.controller;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zheng.demo.postgresDateDemo.entity.DateTime;
-import org.zheng.demo.postgresDateDemo.repository.DateTimeRepository;
+
+import net.projectsync.postgresDateDemo.entity.DateTime;
+import net.projectsync.postgresDateDemo.repository.DateTimeRepository;
 
 @RestController
 public class DemoRestController {

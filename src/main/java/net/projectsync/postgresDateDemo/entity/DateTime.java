@@ -1,4 +1,4 @@
-package org.zheng.demo.postgresDateDemo.entity;
+package net.projectsync.postgresDateDemo.entity;
 
 import java.time.Instant;
 import java.time.LocalDate;
